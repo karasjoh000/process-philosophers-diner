@@ -1,10 +1,7 @@
-#define _SVID_SOURCE
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include <sys/types.h>
 #include <sys/sem.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
 #include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
@@ -23,14 +20,6 @@
 
 
 static int shmid;
-
-union semun {
-	int              val;    /* Value for SETVAL */
-	struct semid_ds *buf;    /* Buffer for IPC_STAT, IPC_SET */
-	unsigned short  *array;  /* Array for GETALL, SETALL */
-	struct seminfo  *__buf;  /* Buffer for IPC_INFO
-				(Linux-specific) */
-};
 
 
 
@@ -90,7 +79,7 @@ int main() {
 	union semun r;
 	r.val = 1;
 
-	shmid = semget( IPC_PRIVATE, 5, S_IRUSR | S_IWUSR );
+	shmid = semget( IPC_PRIVATE, 5, SEM_R | SEM_A );
 
 	if( shmid < 0 ) {
 		fprintf( stderr, "Error on semget: %s\n", strerror( errno ) );
