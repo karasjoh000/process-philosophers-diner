@@ -47,8 +47,10 @@ int randomGaussian(int mean, int stddev) {
 
 void lifeOfPi( int id ) {
 	struct sembuf sops[2];
+	//assign the correct chopsticks to each philospher.
 	sops[0].sem_num = ( id + 4 ) % 5;
 	sops[1].sem_num = id;
+	//set to 0 to represent that phil is requesting a chopstick.
 	sops[0].sem_flg = sops[1].sem_flg = 0;
 	int totEatTime;
 	for ( totEatTime = 0; totEatTime < 100; ) {
@@ -90,6 +92,7 @@ int main() {
 	union semun r;
 	r.val = 1;
 
+	//get 5 semaphores representing the chopsticks.
 	shmid = semget( IPC_PRIVATE, 5, S_IRUSR | S_IWUSR );
 
 	if( shmid < 0 ) {
@@ -98,7 +101,8 @@ int main() {
 	}
 
 	int philID = 0;
-
+	//intially set all flags to 1 representing that
+	//all chopsticks are avialable. 
 	for ( ; philID < 5; philID++ ) {
 		if( semctl( shmid, philID, SETVAL, r ) < 0 ) {
 			fprintf( stderr, "Error on semctl: %s\n", strerror( errno ) );
