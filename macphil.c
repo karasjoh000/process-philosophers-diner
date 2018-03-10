@@ -23,15 +23,15 @@ static int shmid;
 
 
 
-int randomGaussian(int mean, int stddev) {
-	double mu = 0.5 + (double) mean;
-	double sigma = fabs((double) stddev);
-	double f1 = sqrt(-2.0 * log((double) rand() / (double) RAND_MAX));
-	double f2 = 2.0 * 3.14159265359 * (double) rand() / (double) RAND_MAX;
-	if (rand() & (1 << 5))
-		return (int) floor(mu + sigma * cos(f2) * f1);
+int randomGaussian( int mean, int stddev ) {
+	double mu = 0.5 + ( double ) mean;
+	double sigma = fabs( ( double ) stddev );
+	double f1 = sqrt( -2.0 * log( ( double ) rand() / ( double ) RAND_MAX ) );
+	double f2 = 2.0 * 3.14159265359 * ( double ) rand() / ( double ) RAND_MAX;
+	if ( rand() & ( 1 << 5 ) )
+		return ( int ) floor( mu + sigma * cos( f2 ) * f1 );
 	else
-		return (int) floor(mu + sigma * sin(f2) * f1);
+		return ( int ) floor( mu + sigma * sin( f2 ) * f1 );
 }
 
 void lifeOfPi( int id ) {
@@ -51,8 +51,8 @@ void lifeOfPi( int id ) {
 			exit( 1 );
 		}
 
-		eatTime = abs(randomGaussian(  MEAN_EAT, STDDEV_EAT ));
-		printf("philID: %d eattime: %d, toteat:%d\n", id, eatTime, totEatTime);
+		eatTime = abs( randomGaussian(  MEAN_EAT, STDDEV_EAT ) );
+		printf( "philID: %d eattime: %d, toteat:%d\n", id, eatTime, totEatTime );
 		sleep( eatTime );
 		totEatTime += eatTime;
 
@@ -63,15 +63,15 @@ void lifeOfPi( int id ) {
 			exit( 1 );
 		}
 
-		thinkTime = abs(randomGaussian( MEAN_THNK, STDDEV_THNK ));
-		printf("philID: %d thinktime: %d\n", id, thinkTime);
+		thinkTime = abs( randomGaussian( MEAN_THNK, STDDEV_THNK ) );
+		printf( "philID: %d thinktime: %d\n", id, thinkTime );
 		sleep( thinkTime );
 
 	}
 
-	printf("philospher %d is dead\n", id);
+	printf( "philospher %d is dead\n", id );
 
-	exit(0);
+	exit( 0 );
 }
 
 int main() {
@@ -105,7 +105,7 @@ int main() {
 	for( philID = 0 ; philID < 5; philID++ )
 		wait( NULL );
 
-	printf("\n\nAll philosphers were successfully assassinated\n\n");
+	printf( "\n\nAll philosphers were successfully assassinated\n\n" );
 
 	if( semctl( shmid, -1, IPC_RMID ) < 0 ) {
 		fprintf( stderr, "Error on semctl: %s\n", strerror( errno ) );

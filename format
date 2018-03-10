@@ -1,0 +1,2 @@
+astyle -p -D -t *.c
+rm *.c.orig
