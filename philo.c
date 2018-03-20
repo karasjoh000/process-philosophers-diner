@@ -176,10 +176,6 @@ int main() {
 			fprintf( stderr, "Error on semctl: %s\n", strerror( errno ) );
 			exit( 1 );
 		}
-		if( semctl( semid, philID, SETVAL, r ) < 0 ) {
-			fprintf( stderr, "Error on semctl: %s\n", strerror( errno ) );
-			exit( 1 );
-		}
 	}
 
 	// borrow shared memory to keep track of philospher metadata.
