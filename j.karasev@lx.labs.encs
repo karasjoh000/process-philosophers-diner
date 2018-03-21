@@ -120,9 +120,6 @@ int randomGaussian( int mean, int stddev ) {
 // subroutine where each child lives in.
 void lifeOfPi( int id, pmeta *meta ) {
 
-	signal(SIGINT, SIG_DFL);  // set to defualt to avoid releasing memory after it is
-				  // released by parent process.
-
 	struct sembuf sops[2];
 	//assign the correct chopsticks to each philospher.
 	sops[0].sem_num = ( id + 4 ) % 5;
